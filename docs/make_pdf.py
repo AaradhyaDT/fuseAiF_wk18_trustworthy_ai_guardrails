@@ -70,14 +70,37 @@ def _find_browser_executable() -> str | None:
 
 def _clean_latex_math(text: str) -> str:
     """Transform KaTeX math notation into clean typography for HTML/PDF rendering."""
-    # Replace common patterns
-    text = re.sub(r"\$\\mu\s*=\s*([0-9.]+)\\text\{\s*ms\}\$", r"<b>&mu; = \1 ms</b>", text)
-    text = re.sub(r"\$p95\s*=\s*([0-9.]+)\\text\{\s*ms\}\$", r"<b>p95 = \1 ms</b>", text)
+    # 1. Protect literal escaped currency values (\$5,000 -> &#36;5,000)
+    text = re.sub(r"\\\$([0-9,]+)", r"&#36;\1", text)
+
+    # 2. Convert specific metric and symbol patterns
+    text = re.sub(r"\$\\mu\s*=\s*([0-9.]+)\\text\{\s*ms\}\$", r"&mu; = \1 ms", text)
+    text = re.sub(r"\$p95\s*=\s*([0-9.]+)\\text\{\s*ms\}\$", r"p95 = \1 ms", text)
     text = re.sub(r"\$([0-9.]+)\\text\{--\}([0-9.]+)\\text\{\s*ms\}\$", r"\1&ndash;\2 ms", text)
+    text = re.sub(r"\$([0-9.]+)\\text\{--\}([0-9.]+)\$", r"\1&ndash;\2", text)
     text = re.sub(r"\$([0-9.]+)\\text\{\s*ms\}\$", r"\1 ms", text)
-    text = re.sub(r"\$F_1\s*=\s*([0-9.]+)\$", r"<b>F<sub>1</sub> = \1</b>", text)
+    text = re.sub(r"\$F_1\s*=\s*([0-9.]+)\$", r"F<sub>1</sub> = \1", text)
     text = re.sub(r"\$F_1\$-Score", r"F<sub>1</sub>-Score", text)
-    text = re.sub(r"\$([A-Za-z0-9_]+)\$", r"<i>\1</i>", text)
+    text = re.sub(r"\$F_1\$", r"F<sub>1</sub>", text)
+    text = re.sub(r"\$FP\s*=\s*0\$", r"FP = 0", text)
+    text = re.sub(r"\$p50\$", r"p50", text)
+    text = re.sub(r"\$p95\$", r"p95", text)
+    text = re.sub(r"\$<([0-9.]+)\\text\{\s*ms\}\$", r"&lt;\1 ms", text)
+
+    # 3. Strip any remaining \text{...}
+    text = re.sub(r"\\text\{([^}]+)\}", r"\1", text)
+
+    # 4. Handle standalone numbers inside math ($0.70$)
+    text = re.sub(r"\$([0-9.]+)\$", r"\1", text)
+
+    # 5. General remaining inline math $...$ -> clean inner string
+    text = re.sub(r"\$([^$\n]+)\$", r"\1", text)
+
+    # 6. Restore currency symbol &#36; -> $
+    text = text.replace("&#36;", "$")
+
+    # 7. Greek & relational entities
+    text = text.replace(r"\mu", "&mu;").replace(r"\le", "&le;").replace(r"\ge", "&ge;")
     return text
 
 
@@ -192,63 +215,76 @@ def render_publication_html(md_path: Path) -> str:
     )
 
     css = """
+  @import url('https://fonts.googleapis.com/css2?family=Latin+Modern+Roman:ital,wght@0,400;0,700;1,400;1,700&family=Latin+Modern+Mono&display=swap');
+  @import url('https://cdn.jsdelivr.net/npm/latin-modern-web@1.0.2/style/latin-modern-roman.min.css');
+
   @page {
     size: A4;
-    margin: 18mm 16mm 20mm 16mm;
+    margin: 18mm 16mm 18mm 16mm;
     @top-right {
-      content: "Fuse AI Fellowship 2026 | Week 18 Technical Report";
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      content: "Fuse AI Fellowship 2026 - Week 18 Technical Report";
+      font-family: "Latin Modern Roman", "CMU Serif", "Computer Modern Roman", "TeX Gyre Termes", "Times New Roman", Times, serif;
       font-size: 8pt;
+      font-style: italic;
       color: #64748b;
     }
     @bottom-center {
-      content: "Page " counter(page) " of " counter(pages);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 8pt;
-      color: #64748b;
+      content: "- " counter(page) " -";
+      font-family: "Latin Modern Roman", "CMU Serif", "Computer Modern Roman", "TeX Gyre Termes", "Times New Roman", Times, serif;
+      font-size: 8.5pt;
+      color: #475569;
     }
   }
 
   * { box-sizing: border-box; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.55;
-    color: #0f172a;
+    font-family: "Latin Modern Roman", "CMU Serif", "Computer Modern Roman", "TeX Gyre Termes", "Times New Roman", "Nimbus Roman No9 L", Times, serif;
+    line-height: 1.48;
+    color: #111827;
     font-size: 9.8pt;
     margin: 0;
     padding: 0;
     background: #ffffff;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
 
   h1 {
-    font-size: 19pt;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    font-family: "Latin Modern Roman", "CMU Serif", "Computer Modern Roman", "TeX Gyre Termes", "Times New Roman", Times, serif;
+    font-size: 18pt;
+    font-weight: 700;
+    letter-spacing: -0.01em;
     color: #0f172a;
+    text-align: center;
     margin-top: 0;
-    margin-bottom: 6pt;
-    border-bottom: 2.5pt solid #0284c7;
-    padding-bottom: 6pt;
+    margin-bottom: 8pt;
+    border-bottom: 1.5pt solid #0f172a;
+    padding-bottom: 8pt;
   }
 
   h2 {
-    font-size: 13pt;
+    font-family: "Latin Modern Roman", "CMU Serif", "Computer Modern Roman", "TeX Gyre Termes", "Times New Roman", Times, serif;
+    font-size: 12.5pt;
     font-weight: 700;
-    color: #0369a1;
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    color: #0f172a;
     margin-top: 18pt;
     margin-bottom: 6pt;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 3pt;
+    border-bottom: 0.75pt solid #cbd5e1;
+    padding-bottom: 2pt;
     page-break-after: avoid;
     break-after: avoid;
   }
 
   h3 {
-    font-size: 11pt;
-    font-weight: 600;
+    font-family: "Latin Modern Roman", "CMU Serif", "Computer Modern Roman", "TeX Gyre Termes", "Times New Roman", Times, serif;
+    font-size: 10.5pt;
+    font-weight: 700;
+    font-style: italic;
     color: #1e293b;
-    margin-top: 14pt;
+    margin-top: 13pt;
     margin-bottom: 4pt;
     page-break-after: avoid;
     break-after: avoid;
@@ -258,113 +294,123 @@ def render_publication_html(md_path: Path) -> str:
     margin-top: 0;
     margin-bottom: 8pt;
     text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
   }
 
   ul, ol {
     margin-top: 0;
     margin-bottom: 8pt;
-    padding-left: 18pt;
+    padding-left: 20pt;
   }
 
   li {
     margin-bottom: 3pt;
+    text-align: justify;
   }
 
   hr {
     border: none;
-    border-top: 1px solid #cbd5e1;
+    border-top: 0.75pt solid #cbd5e1;
     margin: 14pt 0;
   }
 
-  /* Table Design */
+  /* Academic Booktabs Table Design (LaTeX style) */
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: 10pt 0 14pt 0;
+    margin: 12pt 0 16pt 0;
     font-size: 8.8pt;
     page-break-inside: avoid;
     break-inside: avoid;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    border-radius: 6px;
-    overflow: hidden;
+    border-top: 1.5pt solid #0f172a;
+    border-bottom: 1.5pt solid #0f172a;
   }
 
   th {
-    background-color: #0f172a;
-    color: #ffffff;
-    font-weight: 600;
+    border-top: 1.5pt solid #0f172a;
+    border-bottom: 1pt solid #0f172a;
+    color: #0f172a;
+    font-weight: 700;
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
     text-align: left;
-    padding: 6pt 8pt;
-    letter-spacing: 0.02em;
+    padding: 6pt 7pt;
+    background: none;
   }
 
   td {
-    border: 1px solid #e2e8f0;
-    padding: 5pt 8pt;
+    border-top: 0.5pt solid #e2e8f0;
+    border-bottom: 0.5pt solid #e2e8f0;
+    padding: 5pt 7pt;
     vertical-align: top;
+    border-left: none;
+    border-right: none;
   }
 
-  tr:nth-child(even) td {
-    background-color: #f8fafc;
+  tr:last-child td {
+    border-bottom: 1.5pt solid #0f172a;
   }
 
-  /* Badges & Inline Elements */
+  /* Badges & Monospace Elements */
   code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    background: #f1f5f9;
-    color: #0369a1;
-    padding: 1.5pt 3.5pt;
-    border-radius: 3pt;
+    font-family: "Latin Modern Mono", "CMU Typewriter Text", "Courier New", Courier, monospace;
+    background: #f8fafc;
+    color: #0f172a;
+    padding: 1pt 3pt;
+    border-radius: 2pt;
     font-size: 8.5pt;
-    border: 1px solid #e2e8f0;
+    border: 0.5pt solid #cbd5e1;
   }
 
   pre {
     background: #f8fafc;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 8pt;
-    font-size: 8.2pt;
+    border: 0.75pt solid #cbd5e1;
+    border-radius: 3pt;
+    padding: 8pt 10pt;
+    font-size: 8pt;
     overflow-x: auto;
     page-break-inside: avoid;
     break-inside: avoid;
+    line-height: 1.35;
   }
 
   pre code {
     background: none;
     border: none;
     padding: 0;
-    color: #1e293b;
+    color: #0f172a;
   }
 
   blockquote {
-    border-left: 3.5pt solid #0284c7;
-    background-color: #f0f9ff;
-    margin: 8pt 0;
-    padding: 6pt 10pt;
-    color: #0369a1;
-    border-radius: 0 4pt 4pt 0;
+    border-left: 2.5pt solid #475569;
+    background-color: #f8fafc;
+    margin: 10pt 0;
+    padding: 6pt 12pt;
+    color: #334155;
+    font-style: italic;
   }
 
   /* Diagram Box */
   .diagram-container {
-    margin: 12pt 0;
+    margin: 14pt 0;
     padding: 10pt;
     background: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
+    border: 0.75pt solid #cbd5e1;
+    border-radius: 4pt;
     text-align: center;
     page-break-inside: avoid;
     break-inside: avoid;
   }
 
   .diagram-title {
-    font-size: 9pt;
+    font-family: "Latin Modern Roman", "CMU Serif", "Computer Modern Roman", "Times New Roman", serif;
+    font-size: 8.8pt;
     font-weight: 700;
-    color: #475569;
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    color: #1e293b;
     margin-bottom: 6pt;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
 
   /* Print Specifics */

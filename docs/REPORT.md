@@ -139,7 +139,7 @@ The sub-millisecond overhead guarantees that adding this guardrail layer introdu
 ## 5. Failure Analysis (Concrete Failure Modes)
 
 ### Failure Mode 1: Lexical Divergence in Factual Grounding (False Positive / False Negative)
-- **Symptom**: If an LLM synthesizes a completely accurate, factual summary of the source document using high-level synonyms or abstract language (e.g., *"remuneration is capped at five thousand dollars"* vs source context *"tuition reimbursement is limited to $5,000"*), the token-overlap support score drops below the domain threshold ($0.70$), erroneously tripping the fallback circuit breaker.
+- **Symptom**: If an LLM synthesizes a completely accurate, factual summary of the source document using high-level synonyms or abstract language (e.g., *"remuneration is capped at five thousand dollars"* vs source context *"tuition reimbursement is limited to \$5,000"*), the token-overlap support score drops below the domain threshold ($0.70$), erroneously tripping the fallback circuit breaker.
 - **Root Cause**: Heuristic overlap relies on normalized token intersections rather than dense vector embedding cosine similarity or a trained NLI cross-encoder model (e.g., DeBERTa-v3).
 - **Remediation**: In production environments with GPU or ONNX runtime availability, pair the token-overlap filter with a quantized lightweight semantic cross-encoder (e.g., `sentence-transformers/all-MiniLM-L6-v2`) when token overlap falls into the ambiguous $0.50\text{--}0.70$ margin.
 
@@ -156,12 +156,12 @@ The sub-millisecond overhead guarantees that adding this guardrail layer introdu
 
 ### 6.1 Safety vs. Usability Trade-offs
 1. **Case A: Strict Over-Enforcement (Safety Priority)**
-   - *Scenario*: Setting groundedness threshold to $0.90$ across all queries and enforcing strict exact regex refusal.
+   - *Scenario*: Setting groundedness threshold to 0.90 across all queries and enforcing strict exact regex refusal.
    - *Trade-off*: Prevents hallucinations completely, but legitimate, fluent answers using conversational transitions (e.g., *"Certainly! Based on our records..."*) get rejected, degrading usability and frustrating users.
 2. **Case B: Permissive Under-Enforcement (Usability Priority)**
    - *Scenario*: Bypassing groundedness checks or using loose regex matching to allow creative expressions.
    - *Trade-off*: Maximizes conversational flow, but exposes the organization to legal liabilities, misinformation, and catastrophic credential leakage.
-   - *Resolution*: Domain-calibrated thresholds ($0.85$ for medical/legal, $0.80$ for financial, $0.70$ for general, and $0.0$ for creative drafting).
+   - *Resolution*: Domain-calibrated thresholds (0.85 for medical/legal, 0.80 for financial, 0.70 for general, and 0.0 for creative drafting).
 
 ### 6.2 Deployment Suitability Verdict
 
