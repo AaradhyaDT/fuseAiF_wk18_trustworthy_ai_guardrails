@@ -82,7 +82,7 @@ class GroundednessChecker:
             "be", "has", "have", "had", "will", "would", "can", "could", "should",
         }
         claim_words = [
-            w.lower()
+            re.sub(r"_\d+$", "", w.lower())
             for w in re.findall(r"\b[a-zA-Z0-9_-]+\b", claim)
             if w.lower() not in stop_words and len(w) > 2
         ]

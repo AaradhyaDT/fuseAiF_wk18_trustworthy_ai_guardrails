@@ -6,10 +6,12 @@ from guardrails.models import (
     OutputGuardrailReport,
     PipelineResponse,
 )
+from guardrails.pipeline import TrustworthyAIGateway
 
 __all__ = [
     "GuardrailVerdict",
     "InputGuardrailReport",
     "OutputGuardrailReport",
     "PipelineResponse",
+    "TrustworthyAIGateway",
 ]
