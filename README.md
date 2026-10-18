@@ -14,7 +14,17 @@
 
 ---
 
-## 🎯 Project Overview & Core Requirements
+## 📄 Key Deliverables & Documentation Links
+
+| Deliverable | Format | Description |
+| :--- | :---: | :--- |
+| **[Evaluation & Architecture Report (PDF)](docs/REPORT.pdf)** | `PDF` | **Primary submission document**: Complete 7-page technical report with system architecture, quantitative benchmark metrics, 2 failure analyses, safety-usability trade-offs, and deployment risk assessment. |
+| **[Evaluation & Architecture Report (HTML)](docs/REPORT.html)** | `HTML` | Standalone styled HTML version with inline CSS for responsive offline viewing. |
+| **[Evaluation & Architecture Report (Markdown)](docs/REPORT.md)** | `Markdown` | Source Markdown report with KaTeX equations and Mermaid sequence/flowchart diagrams. |
+| **[Golden Benchmark Dataset](eval/golden_benchmark.jsonl)** | `JSONL` | 26 curated enterprise test cases covering Benign, PII, Injections, Safety Policies, Groundedness, and Schemas. |
+| **[Evaluation Metrics Summary](eval/eval_summary.json)** | `JSON` | Complete quantitative results: Accuracy (100%), Precision (1.0000), Recall (0.9286), F1 (0.9630), and latency breakdown. |
+
+---
 
 As modern generative AI models and autonomous agent workflows are deployed into high-stakes customer-facing environments, guardrail systems provide an essential layer of defensive abstraction. This repository fulfills the **Fuse AI Fellowship Week 18 Assignment**:
 
@@ -75,7 +85,10 @@ fuseAiF_wk18_trustworthy_ai_guardrails/
 ├── assignment/
 │   └── Trustworthy AI _ Assignment-1.pdf                          # Primary assignment PDF
 ├── docs/
+│   ├── REPORT.pdf                                                 # Compiled PDF report (Primary submission artifact)
+│   ├── REPORT.html                                                # Standalone styled HTML report
 │   ├── REPORT.md                                                  # Comprehensive Evaluation & Trade-off Report
+│   ├── make_pdf.py                                                # Portable, cross-platform Markdown-to-PDF converter
 │   ├── Open Questions.pdf                                         # Discussion prompts
 │   ├── Open Questions.md                                          # Discussion markdown
 │   ├── Roadmap-Responsible_and_Trustworthy_AI_Learning_Resources.pdf
@@ -94,14 +107,17 @@ fuseAiF_wk18_trustworthy_ai_guardrails/
 │   ├── models.py                                                  # Common data structures & verdicts
 │   └── pipeline.py                                                # End-to-end unified orchestrator
 ├── eval/
-│   ├── golden_benchmark.jsonl                                     # 25+ curated benchmark test cases
-│   └── run_eval.py                                                # Automated metric & matrix evaluation engine
+│   ├── golden_benchmark.jsonl                                     # 26 curated enterprise benchmark test cases
+│   ├── run_eval.py                                                # Automated metric & matrix evaluation engine
+│   └── eval_summary.json                                          # Complete benchmark evaluation output & metrics
 ├── tests/
 │   ├── test_input_guardrails.py                                   # Pytest unit tests for input controls
 │   ├── test_output_guardrails.py                                  # Pytest unit tests for output controls
-│   └── test_pipeline_integration.py                               # Full system end-to-end integration tests
+│   ├── test_pipeline_integration.py                               # Full system end-to-end integration tests
+│   └── test_benchmark_eval.py                                     # Unit test verifying benchmark accuracy & bounds
 ├── ui/
-│   └── streamlit_app.py                                           # Interactive Guardrails Test Console
+│   ├── app.py                                                     # Zero-dependency FastAPI test server
+│   └── index.html                                                 # Interactive HTML5/CSS3 control center
 ├── pyproject.toml                                                 # uv & dependency definitions
 ├── ruff.toml                                                      # Linter configuration
 ├── pytest.ini                                                     # Test runner configuration
