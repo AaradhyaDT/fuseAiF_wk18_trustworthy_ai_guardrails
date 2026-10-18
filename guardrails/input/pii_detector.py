@@ -78,8 +78,8 @@ class PIIDetector:
         # Phone Numbers (International E.164, US standard, and 10-digit South Asian / Nepali)
         ("PHONE", re.compile(r"(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b"), 0.90),
         ("PHONE_LOCAL", re.compile(r"\b(?:98\d{8}|97\d{8})\b"), 0.95),
-        # API Keys & Sensitive Secrets
-        ("API_KEY", re.compile(r"\b(?:sk-[a-zA-Z0-9_-]{20,}|ghp_[a-zA-Z0-9]{30,}|AKIA[0-9A-Z]{16})\b"), 1.0),
+        # API Keys & Sensitive Secrets (OpenAI, Stripe, GitHub, AWS, etc.)
+        ("API_KEY", re.compile(r"\b(?:sk[-_](?:live|test)?[a-zA-Z0-9_-]{15,}|ghp_[a-zA-Z0-9]{30,}|AKIA[0-9A-Z]{16})\b"), 1.0),
         # IPv4 Addresses
         ("IP_ADDRESS", re.compile(r"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"), 0.85),
     ]

@@ -19,10 +19,11 @@ TAXONOMY_RULES: dict[SensitiveCategory, dict] = {
             "how to make a bomb", "synthesize explosives", "build a nuclear",
             "chemical weapon", "biological weapon", "ricin", "anthrax",
             "mustard gas", "sarin", "cbrn", "dirty bomb", "weaponize anthrax",
+            "toxic compounds", "prohibited toxic compounds",
         ],
         "patterns": [
-            r"(?i)\b(make|build|construct|create|synthesize)\b.*\b(bomb|explosive|chemical\s+weapon|bioweapon|detonator)\b",
-            r"(?i)\b(how\s+to\s+(manufacture|produce|weaponize))\b.*\b(ricin|anthrax|sarin|nerve\s+agent)\b",
+            r"(?i)\b(make|build|construct|create|synthesize)\b.*\b(bomb|explosive|chemical\s+weapon|bioweapon|detonator|toxic\s+compounds?)\b",
+            r"(?i)\b(how\s+to\s+(manufacture|produce|weaponize|synthesize))\b.*\b(ricin|anthrax|sarin|nerve\s+agent|toxic\s+compounds?)\b",
         ],
     },
     SensitiveCategory.CYBERWEAPONS_MALWARE: {
@@ -31,11 +32,11 @@ TAXONOMY_RULES: dict[SensitiveCategory, dict] = {
             "write ransomware", "create malware", "build a botnet",
             "ddos attack script", "how to hack into", "exploit zero-day",
             "phishing kit", "keylogger source", "credential harvester",
-            "rootkit generator", "reverse shell payload",
+            "rootkit generator", "reverse shell payload", "denial of service",
         ],
         "patterns": [
-            r"(?i)\b(write|create|build|generate|develop)\b.*\b(ransomware|malware|keylogger|rootkit|botnet|exploit\s+script)\b",
-            r"(?i)\b(how\s+to\s+(hack|breach|infiltrate))\b.*\b(database|server|network|bank\s+account)\b",
+            r"(?i)\b(write|create|build|generate|develop|launch|conduct)\b.*\b(ransomware|malware|keylogger|rootkit|botnet|exploit\s+script|denial\s+of\s+service|ddos|cyber\s+attack)\b",
+            r"(?i)\b(how\s+(can\s+i|to)\s+(hack|breach|infiltrate|launch|attack))\b.*\b(database|server|network|bank\s+account|servers?)\b",
         ],
     },
     SensitiveCategory.SELF_HARM_CRISIS: {
@@ -43,10 +44,11 @@ TAXONOMY_RULES: dict[SensitiveCategory, dict] = {
         "terms": [
             "want to kill myself", "end my life", "suicide method",
             "how to commit suicide", "i want to die", "no reason to live",
-            "cutting myself", "overdose on pills", "hang myself",
+            "cutting myself", "overdose on pills", "hang myself", "ending my life",
         ],
         "patterns": [
-            r"(?i)\b(i\s+(want|need|plan|am\s+going)\s+to\s+(die|kill\s+myself|end\s+my\s+life|commit\s+suicide))\b",
+            r"(?i)\b((thoughts\s+of\s+)?ending\s+my\s+life|kill\s+myself|commit\s+suicide|want\s+to\s+die)\b",
+            r"(?i)\b(i\s+(want|need|plan|am\s+going|feel\s+like)\s+to\s+(die|kill\s+myself|end\s+my\s+life|commit\s+suicide|harm\s+myself))\b",
             r"(?i)\b(suicide|self[\s-]?harm|self[\s-]?injury)\b.*\b(how|method|way|best)\b",
         ],
     },
@@ -54,10 +56,11 @@ TAXONOMY_RULES: dict[SensitiveCategory, dict] = {
         "route": "hard_block",
         "terms": [
             "ethnic cleansing", "kill all minorities", "exterminate race",
-            "white supremacy doctrine", "subhuman race",
+            "white supremacy doctrine", "subhuman race", "harassment and discrimination",
         ],
         "patterns": [
             r"(?i)\b(ethnic\s+cleansing|genocide|exterminate)\b.*\b(race|minority|immigrants|group)\b",
+            r"(?i)\b(promoting|spread|advocate)\b.*\b(harassment|discrimination|hate)\b.*\b(ethnic|racial|religious|group)\b",
         ],
     },
     SensitiveCategory.FRAUD: {

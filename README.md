@@ -137,15 +137,19 @@ ruff check .
 pytest tests/ -v
 ```
 
-### 3. Run Benchmark Evaluation
+### 3. Run Benchmark Evaluation (26 Golden Cases)
 ```powershell
 python eval/run_eval.py
 ```
+Outputs complete accuracy, precision, recall, F1, FPR, FNR, and p50/p95 latency metrics, and updates `eval/eval_summary.json`.
 
-### 4. Launch Interactive Web Console
+### 4. Launch Interactive Web Console (Zero-Dependency FastAPI)
 ```powershell
-streamlit run ui/streamlit_app.py
+uvicorn ui.app:app --host 127.0.0.1 --port 8000 --reload
+# Or directly:
+python ui/app.py
 ```
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser for live interactive testing with toggleable presets.
 
 ---
 
