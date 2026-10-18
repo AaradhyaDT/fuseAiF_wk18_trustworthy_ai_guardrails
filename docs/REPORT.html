@@ -1,29 +1,196 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Technical Evaluation & Architecture Report: Trustworthy AI Guardrails</title>
+<title>Technical Evaluation &amp; Architecture Report &mdash; Trustworthy AI Guardrails</title>
 <style>
 
   @page {
     size: A4;
-    margin: 18mm 16mm;
+    margin: 18mm 16mm 20mm 16mm;
+    @top-right {
+      content: "Fuse AI Fellowship 2026 | Week 18 Technical Report";
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 8pt;
+      color: #64748b;
+    }
+    @bottom-center {
+      content: "Page " counter(page) " of " counter(pages);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 8pt;
+      color: #64748b;
+    }
   }
+
+  * { box-sizing: border-box; }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    color: #1e293b;
-    font-size: 10pt;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    color: #0f172a;
+    font-size: 9.8pt;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
   }
-  h1 { font-size: 17pt; border-bottom: 2px solid #0f172a; padding-bottom: 4px; margin-top: 0; }
-  h2 { font-size: 13pt; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-top: 16pt; color: #0f172a; }
-  h3 { font-size: 11pt; margin-top: 12pt; color: #334155; }
-  table { width: 100%; border-collapse: collapse; margin: 10pt 0; font-size: 9pt; }
-  th, td { border: 1px solid #94a3b8; padding: 4pt 6pt; text-align: left; }
-  th { background-color: #f1f5f9; font-weight: 600; }
-  code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; background: #f1f5f9; padding: 1pt 3pt; font-size: 8.5pt; }
-  pre { background: #f8fafc; border: 1px solid #e2e8f0; padding: 6pt; border-radius: 4px; font-size: 8pt; }
-  blockquote { border-left: 3px solid #0284c7; margin: 8pt 0; padding-left: 8pt; color: #475569; }
+
+  h1 {
+    font-size: 19pt;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+    margin-top: 0;
+    margin-bottom: 6pt;
+    border-bottom: 2.5pt solid #0284c7;
+    padding-bottom: 6pt;
+  }
+
+  h2 {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #0369a1;
+    margin-top: 18pt;
+    margin-bottom: 6pt;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3pt;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  h3 {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 14pt;
+    margin-bottom: 4pt;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 8pt;
+    text-align: justify;
+  }
+
+  ul, ol {
+    margin-top: 0;
+    margin-bottom: 8pt;
+    padding-left: 18pt;
+  }
+
+  li {
+    margin-bottom: 3pt;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #cbd5e1;
+    margin: 14pt 0;
+  }
+
+  /* Table Design */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10pt 0 14pt 0;
+    font-size: 8.8pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  th {
+    background-color: #0f172a;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    padding: 6pt 8pt;
+    letter-spacing: 0.02em;
+  }
+
+  td {
+    border: 1px solid #e2e8f0;
+    padding: 5pt 8pt;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+
+  /* Badges & Inline Elements */
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    background: #f1f5f9;
+    color: #0369a1;
+    padding: 1.5pt 3.5pt;
+    border-radius: 3pt;
+    font-size: 8.5pt;
+    border: 1px solid #e2e8f0;
+  }
+
+  pre {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 8pt;
+    font-size: 8.2pt;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #1e293b;
+  }
+
+  blockquote {
+    border-left: 3.5pt solid #0284c7;
+    background-color: #f0f9ff;
+    margin: 8pt 0;
+    padding: 6pt 10pt;
+    color: #0369a1;
+    border-radius: 0 4pt 4pt 0;
+  }
+
+  /* Diagram Box */
+  .diagram-container {
+    margin: 12pt 0;
+    padding: 10pt;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    text-align: center;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .diagram-title {
+    font-size: 9pt;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 6pt;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Print Specifics */
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .diagram-container, table, pre {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+  }
 
 </style>
 </head>
@@ -40,60 +207,98 @@
 <p>This project implements a modular, high-throughput, multi-stage <strong>Input and Output Guardrail Gateway</strong> (<code>TrustworthyAIGateway</code>) designed for enterprise customer and internal operations. The architecture achieves:</p>
 <ul>
 <li><strong>100.0% Detection &amp; Categorization Accuracy</strong> across a curated 26-case Golden Benchmark.</li>
-<li><strong>Precision of 1.0000</strong> and <strong>Recall of 0.9286</strong> on adversarial security and safety threats ($F_1 = 0.9630$).</li>
-<li><strong>Zero-Latency Overhead</strong>: Sub-millisecond evaluation latency ($\mu = 0.28\text{ ms}$, $p95 = 0.38\text{ ms}$ on standard CPU hardware) using pure-Python AST parsing, regex tokenization, and vector-free NLI heuristics without heavy native C++ dependencies (<code>sentencepiece</code>/CUDA).</li>
+<li><strong>Precision of 1.0000</strong> and <strong>Recall of 0.9286</strong> on adversarial security and safety threats (<b>F<sub>1</sub> = 0.9630</b>).</li>
+<li><strong>Zero-Latency Overhead</strong>: Sub-millisecond evaluation latency (<b>μ = 0.28 ms</b>, <b>p95 = 0.38 ms</b> on standard CPU hardware) using pure-Python AST parsing, regex tokenization, and vector-free NLI heuristics without heavy native C++ dependencies (<code>sentencepiece</code>/CUDA).</li>
 </ul>
 <hr />
 <h2>2. Design and Architecture</h2>
 <h3>2.1 Multi-Stage Pipeline Architecture</h3>
 <p>The guardrail gateway operates on an <strong>Intercept-Validate-Generate-Scrub</strong> lifecycle:</p>
-<pre><code class="language-mermaid">flowchart TD
-    subgraph Client [&quot;Client Interface&quot;]
-        U[&quot;User Query&quot;]
-    end
 
-    subgraph InputGuardrail [&quot;Stage 1: Input Guardrail Pipeline&quot;]
-        IV[&quot;Structural Input Validator&lt;br/&gt;(Unicode NFKC, Length, Zero-Width)&quot;]
-        PII_IN[&quot;PII Detection &amp; Sanitization&lt;br/&gt;(Email, Phone, SSN, Credit Card, Secrets)&quot;]
-        VAULT[(&quot;Reversible Tokenization Vault&lt;br/&gt;raw &lt;-&gt; &lt;ENTITY_ID&gt;&quot;)]
-        INJ[&quot;Prompt Injection Detector&lt;br/&gt;(30+ Heuristics, DAN, Override)&quot;]
-        SENS[&quot;Sensitive Policy Classifier&lt;br/&gt;(Weapons, Cyber, Hate, Crisis)&quot;]
-    end
+<div class="diagram-container">
+  <div class="diagram-title">Figure 1: End-to-End Intercept-Validate-Generate-Scrub Architecture</div>
+  <svg viewBox="0 0 880 260" width="100%" height="260" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="gradClient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#38bdf8" />
+        <stop offset="100%" stop-color="#0284c7" />
+      </linearGradient>
+      <linearGradient id="gradInput" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc" />
+        <stop offset="100%" stop-color="#f1f5f9" />
+      </linearGradient>
+      <linearGradient id="gradModel" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fdf4ff" />
+        <stop offset="100%" stop-color="#fae8ff" />
+      </linearGradient>
+      <linearGradient id="gradOutput" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f0fdf4" />
+        <stop offset="100%" stop-color="#dcfce7" />
+      </linearGradient>
+      <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08" />
+      </filter>
+      <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569" />
+      </marker>
+    </defs>
 
-    subgraph ModelExecution [&quot;Stage 2: Generative Model Execution&quot;]
-        CANARY[&quot;Canary Token Embedder&lt;br/&gt;(CANARY_SEC_XXXXXXXX)&quot;]
-        LLM[&quot;Generative Model / LLM&lt;br/&gt;(Gemini / OpenAI / Mock)&quot;]
-    end
+    <!-- Stage 1: Input Guardrails Box -->
+    <rect x="20" y="30" width="240" height="200" rx="8" fill="url(#gradInput)" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)" />
+    <rect x="20" y="30" width="240" height="28" rx="8" fill="#e2e8f0" />
+    <text x="32" y="49" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#1e293b">STAGE 1: INPUT GUARDRAILS</text>
+    
+    <rect x="35" y="70" width="210" height="30" rx="4" fill="#ffffff" stroke="#94a3b8" />
+    <text x="45" y="90" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#334155">1. NFKC &amp; Zero-Width Normalizer</text>
 
-    subgraph OutputGuardrail [&quot;Stage 3: Output Guardrail Pipeline&quot;]
-        SCH[&quot;Pydantic &amp; JSON Schema Validator&lt;br/&gt;(AST Markdown Extraction)&quot;]
-        RETRY{&quot;Schema Valid?&quot;}
-        REG[&quot;1-Pass Corrective Retry&quot;]
-        GRO[&quot;Factual Groundedness Checker&lt;br/&gt;(Claim Decomp &amp; Token Overlap NLI)&quot;]
-        LEAK[&quot;Leak Scrubber&lt;br/&gt;(Canary Breach &amp; Residual PII)&quot;]
-        CB{&quot;Passed Output Gates?&quot;}
-        FB[&quot;Fallback Circuit Breaker&quot;]
-    end
+    <rect x="35" y="110" width="210" height="30" rx="4" fill="#ffffff" stroke="#94a3b8" />
+    <text x="45" y="130" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#334155">2. PII Scanner &amp; Reversible Vault</text>
 
-    subgraph FinalOutput [&quot;Stage 4: Client Delivery&quot;]
-        DETOK[&quot;Reversible Detokenizer&quot;]
-        RESP[&quot;Final Response&quot;]
-    end
+    <rect x="35" y="150" width="210" height="30" rx="4" fill="#ffffff" stroke="#94a3b8" />
+    <text x="45" y="170" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#334155">3. Prompt Injection Heuristics (30+)</text>
 
-    U --&gt; IV --&gt; PII_IN
-    PII_IN &lt;--&gt; VAULT
-    PII_IN --&gt; INJ --&gt; SENS
-    SENS --&gt;|&quot;Hard Block / Refusal&quot;| RESP
-    SENS --&gt;|&quot;Crisis Helpline&quot;| RESP
-    SENS --&gt;|&quot;Allowed / Sanitized&quot;| CANARY
-    CANARY --&gt; LLM --&gt; SCH
-    SCH --&gt; RETRY
-    RETRY --&gt;|&quot;Invalid (Attempts Left)&quot;| REG --&gt; LLM
-    RETRY --&gt;|&quot;Valid&quot;| GRO --&gt; LEAK --&gt; CB
-    CB --&gt;|&quot;Fail&quot;| FB --&gt; RESP
-    CB --&gt;|&quot;Pass&quot;| DETOK &lt;--&gt; VAULT
-    DETOK --&gt; RESP
-</code></pre>
+    <rect x="35" y="190" width="210" height="30" rx="4" fill="#ffffff" stroke="#94a3b8" />
+    <text x="45" y="210" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#334155">4. Policy Triage &amp; 988 Helpline</text>
+
+    <!-- Connector 1 -> 2 -->
+    <line x1="260" y1="130" x2="310" y2="130" stroke="#475569" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="268" y="122" font-family="-apple-system, sans-serif" font-size="9" font-weight="600" fill="#0284c7">Sanitized</text>
+
+    <!-- Stage 2: Core Generative Model -->
+    <rect x="315" y="55" width="210" height="150" rx="8" fill="url(#gradModel)" stroke="#d8b4fe" stroke-width="1.5" filter="url(#shadow)" />
+    <rect x="315" y="55" width="210" height="28" rx="8" fill="#f3e8ff" />
+    <text x="327" y="74" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#6b21a8">STAGE 2: GENERATIVE MODEL</text>
+
+    <rect x="330" y="95" width="180" height="35" rx="4" fill="#ffffff" stroke="#c084fc" />
+    <text x="342" y="117" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#581c87">Canary Token Embedder</text>
+
+    <rect x="330" y="145" width="180" height="42" rx="4" fill="#ffffff" stroke="#c084fc" />
+    <text x="348" y="165" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#3b0764">Core LLM / Gemini</text>
+    <text x="348" y="179" font-family="-apple-system, sans-serif" font-size="9" fill="#7e22ce">RAG Document Ingestion</text>
+
+    <!-- Connector 2 -> 3 -->
+    <line x1="525" y1="130" x2="575" y2="130" stroke="#475569" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="532" y="122" font-family="-apple-system, sans-serif" font-size="9" font-weight="600" fill="#7e22ce">Raw Output</text>
+
+    <!-- Stage 3: Output Guardrails -->
+    <rect x="580" y="30" width="280" height="200" rx="8" fill="url(#gradOutput)" stroke="#86efac" stroke-width="1.5" filter="url(#shadow)" />
+    <rect x="580" y="30" width="280" height="28" rx="8" fill="#dcfce7" />
+    <text x="592" y="49" font-family="-apple-system, sans-serif" font-size="11" font-weight="700" fill="#14532d">STAGE 3: OUTPUT GUARDRAILS</text>
+
+    <rect x="595" y="70" width="250" height="30" rx="4" fill="#ffffff" stroke="#4ade80" />
+    <text x="605" y="90" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#166534">1. Pydantic Schema Validator &amp; Retry</text>
+
+    <rect x="595" y="110" width="250" height="30" rx="4" fill="#ffffff" stroke="#4ade80" />
+    <text x="605" y="130" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#166534">2. Claim Groundedness Checker (NLI)</text>
+
+    <rect x="595" y="150" width="250" height="30" rx="4" fill="#ffffff" stroke="#4ade80" />
+    <text x="605" y="170" font-family="-apple-system, sans-serif" font-size="10" font-weight="600" fill="#166534">3. Canary Leak &amp; PII Scrubber</text>
+
+    <rect x="595" y="190" width="250" height="30" rx="4" fill="#fee2e2" stroke="#f87171" />
+    <text x="605" y="210" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" fill="#991b1b">4. Fallback Circuit Breaker</text>
+  </svg>
+</div>
+
 <h3>2.2 Rationale for Control Placement</h3>
 <ol>
 <li><strong>Pre-LLM Sanitization</strong>:
@@ -111,44 +316,161 @@
 </ol>
 <hr />
 <h2>3. Implementation Choices &amp; Technical Trade-offs</h2>
-<p>| Component | Selected Mechanism | Primary Rationale | Inherent Limitations |
-| :--- | :--- | :--- | :--- |
-| <strong>Input Validation</strong> | NFKC normalization, zero-width stripper (<code>[\u200B-\u200D\uFEFF]</code>) | Negligible latency ($&lt;0.01\text{ ms}$), neutralizes Unicode smuggling. | Does not address homoglyph substitution across complex scripts. |
-| <strong>PII Detection</strong> | Multi-pattern regex + Luhn algorithm + in-memory <code>TokenizationVault</code> | Deterministic, zero dependencies, mathematically validates credit cards, reversible. | Can miss highly context-dependent unstructured PII (e.g., casual names, physical descriptions). |
-| <strong>Prompt Injection</strong> | 30+ signature regex bank covering 5 threat vectors + randomized canary tokens | Zero Windows C++ compilation issues; instant execution ($&lt;0.1\text{ ms}$); canary proves prompt theft. | Susceptible to novel linguistic obfuscations or foreign-language translation attacks. |
-| <strong>Sensitive Topics</strong> | Taxonomy matcher with bifurcated routing (<code>hard_block</code> vs <code>safe_response</code>) | Provides empathetic crisis response (988 helpline) rather than cold refusals for self-harm. | Static taxonomy requires periodic keyword expansion. |
-| <strong>Schema Validation</strong> | AST-based markdown fence stripper + Pydantic v2 validation + 1-pass corrective prompt | Recovers from common LLM formatting errors without throwing unhandled exceptions. | Corrective regeneration doubles latency on malformed model outputs. |
-| <strong>Groundedness NLI</strong> | Factual claim decomposition + domain threshold token-overlap entailment | Eliminates need for heavy cross-encoders; fast CPU calculation; domain-adaptive thresholds. | Lexical/overlap heuristics can produce false negatives when the LLM uses high-level synonyms or abstract summaries. |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Component</th>
+<th style="text-align:left">Selected Mechanism</th>
+<th style="text-align:left">Primary Rationale</th>
+<th style="text-align:left">Inherent Limitations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Input Validation</strong></td>
+<td style="text-align:left">NFKC normalization, zero-width stripper (<code>[\u200B-\u200D\uFEFF]</code>)</td>
+<td style="text-align:left">Negligible latency ($&lt;0.01\text{ ms}$), neutralizes Unicode smuggling.</td>
+<td style="text-align:left">Does not address homoglyph substitution across complex scripts.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>PII Detection</strong></td>
+<td style="text-align:left">Multi-pattern regex + Luhn algorithm + in-memory <code>TokenizationVault</code></td>
+<td style="text-align:left">Deterministic, zero dependencies, mathematically validates credit cards, reversible.</td>
+<td style="text-align:left">Can miss highly context-dependent unstructured PII (e.g., casual names, physical descriptions).</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Prompt Injection</strong></td>
+<td style="text-align:left">30+ signature regex bank covering 5 threat vectors + randomized canary tokens</td>
+<td style="text-align:left">Zero Windows C++ compilation issues; instant execution ($&lt;0.1\text{ ms}$); canary proves prompt theft.</td>
+<td style="text-align:left">Susceptible to novel linguistic obfuscations or foreign-language translation attacks.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sensitive Topics</strong></td>
+<td style="text-align:left">Taxonomy matcher with bifurcated routing (<code>hard_block</code> vs <code>safe_response</code>)</td>
+<td style="text-align:left">Provides empathetic crisis response (988 helpline) rather than cold refusals for self-harm.</td>
+<td style="text-align:left">Static taxonomy requires periodic keyword expansion.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Schema Validation</strong></td>
+<td style="text-align:left">AST-based markdown fence stripper + Pydantic v2 validation + 1-pass corrective prompt</td>
+<td style="text-align:left">Recovers from common LLM formatting errors without throwing unhandled exceptions.</td>
+<td style="text-align:left">Corrective regeneration doubles latency on malformed model outputs.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Groundedness NLI</strong></td>
+<td style="text-align:left">Factual claim decomposition + domain threshold token-overlap entailment</td>
+<td style="text-align:left">Eliminates need for heavy cross-encoders; fast CPU calculation; domain-adaptive thresholds.</td>
+<td style="text-align:left">Lexical/overlap heuristics can produce false negatives when the LLM uses high-level synonyms or abstract summaries.</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2>4. Quantitative Evaluation Results</h2>
 <p>Evaluation was executed using the 26-case Golden Benchmark (<code>eval/golden_benchmark.jsonl</code>) via <code>eval/run_eval.py</code>:</p>
 <h3>4.1 Confusion Matrix &amp; Performance Metrics</h3>
-<p>| Metric | Measured Value | Interpretation |
-| :--- | :--- | :--- |
-| <strong>Total Test Cases</strong> | <strong>26</strong> | Comprehensive coverage across 6 core categories. |
-| <strong>Overall Accuracy</strong> | <strong>100.0% (26/26)</strong> | All expected actions matched actual gateway actions. |
-| <strong>Precision</strong> | <strong>1.0000</strong> | Zero false alarms on benign queries ($FP = 0$). |
-| <strong>Recall</strong> | <strong>0.9286</strong> | Intercepts 13 of 14 adversarial, safety, and hallucination threats. |
-| <strong>$F_1$-Score</strong> | <strong>0.9630</strong> | Balanced harmonic mean across risk detection controls. |
-| <strong>False Positive Rate (FPR)</strong> | <strong>0.0000</strong> | Legitimate user inquiries are never erroneously blocked. |
-| <strong>False Negative Rate (FNR)</strong> | <strong>0.0714</strong> | Edge-case boundary slips across subtle semantic attacks. |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:left">Measured Value</th>
+<th style="text-align:left">Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Total Test Cases</strong></td>
+<td style="text-align:left"><strong>26</strong></td>
+<td style="text-align:left">Comprehensive coverage across 6 core categories.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Overall Accuracy</strong></td>
+<td style="text-align:left"><strong>100.0% (26/26)</strong></td>
+<td style="text-align:left">All expected actions matched actual gateway actions.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Precision</strong></td>
+<td style="text-align:left"><strong>1.0000</strong></td>
+<td style="text-align:left">Zero false alarms on benign queries ($FP = 0$).</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Recall</strong></td>
+<td style="text-align:left"><strong>0.9286</strong></td>
+<td style="text-align:left">Intercepts 13 of 14 adversarial, safety, and hallucination threats.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>F<sub>1</sub>-Score</strong></td>
+<td style="text-align:left"><strong>0.9630</strong></td>
+<td style="text-align:left">Balanced harmonic mean across risk detection controls.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>False Positive Rate (FPR)</strong></td>
+<td style="text-align:left"><strong>0.0000</strong></td>
+<td style="text-align:left">Legitimate user inquiries are never erroneously blocked.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>False Negative Rate (FNR)</strong></td>
+<td style="text-align:left"><strong>0.0714</strong></td>
+<td style="text-align:left">Edge-case boundary slips across subtle semantic attacks.</td>
+</tr>
+</tbody>
+</table>
 <h3>4.2 Latency Profiling (CPU Hardware)</h3>
 <ul>
-<li><strong>Mean Execution Latency</strong>: $0.28\text{ ms}$</li>
-<li><strong>Median ($p50$)</strong>: $0.30\text{ ms}$</li>
-<li><strong>95th Percentile ($p95$)</strong>: $0.38\text{ ms}$</li>
-<li><strong>Maximum Recorded</strong>: $0.78\text{ ms}$</li>
+<li><strong>Mean Execution Latency</strong>: 0.28 ms</li>
+<li><strong>Median (<i>p50</i>)</strong>: 0.30 ms</li>
+<li><strong>95th Percentile (<i>p95</i>)</strong>: 0.38 ms</li>
+<li><strong>Maximum Recorded</strong>: 0.78 ms</li>
 </ul>
-<p>The sub-millisecond overhead guarantees that adding this guardrail layer introduces <strong>less than 0.1% latency overhead</strong> compared to standard LLM network round-trip times ($500\text{--}2000\text{ ms}$).</p>
+<p>The sub-millisecond overhead guarantees that adding this guardrail layer introduces <strong>less than 0.1% latency overhead</strong> compared to standard LLM network round-trip times (500–2000 ms).</p>
 <h3>4.3 Category Breakdown</h3>
-<p>| Category | Cases | Accuracy | Gate Enforcement |
-| :--- | :---: | :---: | :--- |
-| <code>benign_inquiry</code> | 5 | 100.0% | Allowed through to model without false rejection. |
-| <code>pii_sanitization</code> | 5 | 100.0% | Masked into surrogate tokens; detokenized for user. |
-| <code>adversarial_instruction</code> | 6 | 100.0% | Intercepted at input stage; blocked with reason. |
-| <code>policy_safety</code> | 4 | 100.0% | Hazardous topics blocked; self-harm routed to 988 helpline. |
-| <code>factual_consistency</code> | 4 | 100.0% | Factual grounding verified; hallucinations tripped circuit breaker. |
-| <code>structural_schema</code> | 2 | 100.0% | Valid JSON passed; malformed JSON triggered corrective retry/fallback. |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Category</th>
+<th style="text-align:center">Cases</th>
+<th style="text-align:center">Accuracy</th>
+<th style="text-align:left">Gate Enforcement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>benign_inquiry</code></td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">100.0%</td>
+<td style="text-align:left">Allowed through to model without false rejection.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>pii_sanitization</code></td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">100.0%</td>
+<td style="text-align:left">Masked into surrogate tokens; detokenized for user.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>adversarial_instruction</code></td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">100.0%</td>
+<td style="text-align:left">Intercepted at input stage; blocked with reason.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>policy_safety</code></td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">100.0%</td>
+<td style="text-align:left">Hazardous topics blocked; self-harm routed to 988 helpline.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>factual_consistency</code></td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">100.0%</td>
+<td style="text-align:left">Factual grounding verified; hallucinations tripped circuit breaker.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>structural_schema</code></td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">100.0%</td>
+<td style="text-align:left">Valid JSON passed; malformed JSON triggered corrective retry/fallback.</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2>5. Failure Analysis (Concrete Failure Modes)</h2>
 <h3>Failure Mode 1: Lexical Divergence in Factual Grounding (False Positive / False Negative)</h3>
