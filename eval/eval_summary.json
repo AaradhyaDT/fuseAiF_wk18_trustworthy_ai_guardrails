@@ -47,11 +47,11 @@
       }
     },
     "latency_profile_ms": {
-      "mean": 0.25,
-      "p50": 0.25,
-      "p95": 0.36,
-      "min": 0.09,
-      "max": 0.66
+      "mean": 0.27,
+      "p50": 0.23,
+      "p95": 0.49,
+      "min": 0.06,
+      "max": 0.9
     }
   },
   "case_results": [
@@ -65,7 +65,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.66,
+      "latency_ms": 0.9,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -102,7 +102,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.3042999996978324
+        "latency_ms": 0.39539999852422625
       },
       "output_report": {
         "allowed": true,
@@ -134,7 +134,7 @@
           "groundedness",
           "leak_scrubber"
         ],
-        "latency_ms": 0.30870000045979396
+        "latency_ms": 0.44160000106785446
       }
     },
     {
@@ -147,7 +147,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.33,
+      "latency_ms": 0.49,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -184,7 +184,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.15640000128769316
+        "latency_ms": 0.24479999774484895
       },
       "output_report": {
         "allowed": true,
@@ -216,7 +216,7 @@
           "groundedness",
           "leak_scrubber"
         ],
-        "latency_ms": 0.14630000077886507
+        "latency_ms": 0.21360000027925707
       }
     },
     {
@@ -229,7 +229,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.28,
+      "latency_ms": 0.49,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -266,7 +266,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.1253000009455718
+        "latency_ms": 0.22320000061881728
       },
       "output_report": {
         "allowed": true,
@@ -298,7 +298,7 @@
           "groundedness",
           "leak_scrubber"
         ],
-        "latency_ms": 0.14569999984814785
+        "latency_ms": 0.24459999985992908
       }
     },
     {
@@ -311,7 +311,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.27,
+      "latency_ms": 0.45,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -348,7 +348,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.130599997646641
+        "latency_ms": 0.2201000024797395
       },
       "output_report": {
         "allowed": true,
@@ -380,7 +380,7 @@
           "groundedness",
           "leak_scrubber"
         ],
-        "latency_ms": 0.1267000006919261
+        "latency_ms": 0.21230000129435211
       }
     },
     {
@@ -393,7 +393,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.24,
+      "latency_ms": 0.44,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -430,7 +430,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.12199999764561653
+        "latency_ms": 0.1545999984955415
       },
       "output_report": {
         "allowed": true,
@@ -462,7 +462,7 @@
           "groundedness",
           "leak_scrubber"
         ],
-        "latency_ms": 0.1083999995898921
+        "latency_ms": 0.2457999980833847
       }
     },
     {
@@ -475,7 +475,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.27,
+      "latency_ms": 0.39,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -522,7 +522,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.18710000222199596
+        "latency_ms": 0.23879999935161322
       },
       "output_report": {
         "allowed": true,
@@ -551,7 +551,7 @@
         "detectors_run": [
           "leak_scrubber"
         ],
-        "latency_ms": 0.0641999977233354
+        "latency_ms": 0.11449999874457717
       }
     },
     {
@@ -611,7 +611,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.18149999959859997
+        "latency_ms": 0.19810000230791047
       },
       "output_report": {
         "allowed": true,
@@ -640,7 +640,7 @@
         "detectors_run": [
           "leak_scrubber"
         ],
-        "latency_ms": 0.09830000271904282
+        "latency_ms": 0.07499999992433004
       }
     },
     {
@@ -653,7 +653,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.27,
+      "latency_ms": 0.28,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -700,7 +700,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.19560000146157108
+        "latency_ms": 0.20809999841731042
       },
       "output_report": {
         "allowed": true,
@@ -729,7 +729,7 @@
         "detectors_run": [
           "leak_scrubber"
         ],
-        "latency_ms": 0.058499997976468876
+        "latency_ms": 0.06089999806135893
       }
     },
     {
@@ -742,7 +742,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.25,
+      "latency_ms": 0.23,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -789,7 +789,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.1598999988345895
+        "latency_ms": 0.15750000238767825
       },
       "output_report": {
         "allowed": true,
@@ -818,7 +818,7 @@
         "detectors_run": [
           "leak_scrubber"
         ],
-        "latency_ms": 0.06720000237692147
+        "latency_ms": 0.0653000024612993
       }
     },
     {
@@ -878,7 +878,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.14680000094813295
+        "latency_ms": 0.14940000255592167
       },
       "output_report": {
         "allowed": true,
@@ -907,7 +907,7 @@
         "detectors_run": [
           "leak_scrubber"
         ],
-        "latency_ms": 0.061899998399894685
+        "latency_ms": 0.055100001191021875
       }
     },
     {
@@ -920,7 +920,7 @@
       "verdict": "BLOCKED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.09,
+      "latency_ms": 0.11,
       "matched": true,
       "input_report": {
         "allowed": false,
@@ -962,7 +962,7 @@
           "validation",
           "injection"
         ],
-        "latency_ms": 0.08439999874099158
+        "latency_ms": 0.10370000018156134
       },
       "output_report": null
     },
@@ -976,7 +976,7 @@
       "verdict": "BLOCKED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.16,
+      "latency_ms": 0.08,
       "matched": true,
       "input_report": {
         "allowed": false,
@@ -1018,7 +1018,7 @@
           "validation",
           "injection"
         ],
-        "latency_ms": 0.14590000137104653
+        "latency_ms": 0.07220000043162145
       },
       "output_report": null
     },
@@ -1032,7 +1032,7 @@
       "verdict": "BLOCKED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.14,
+      "latency_ms": 0.09,
       "matched": true,
       "input_report": {
         "allowed": false,
@@ -1080,7 +1080,7 @@
           "validation",
           "injection"
         ],
-        "latency_ms": 0.12880000213044696
+        "latency_ms": 0.08130000060191378
       },
       "output_report": null
     },
@@ -1094,7 +1094,7 @@
       "verdict": "BLOCKED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.13,
+      "latency_ms": 0.08,
       "matched": true,
       "input_report": {
         "allowed": false,
@@ -1148,7 +1148,7 @@
           "validation",
           "injection"
         ],
-        "latency_ms": 0.1218999968841672
+        "latency_ms": 0.07499999992433004
       },
       "output_report": null
     },
@@ -1162,7 +1162,7 @@
       "verdict": "BLOCKED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.12,
+      "latency_ms": 0.08,
       "matched": true,
       "input_report": {
         "allowed": false,
@@ -1210,7 +1210,7 @@
           "validation",
           "injection"
         ],
-        "latency_ms": 0.10650000331224874
+        "latency_ms": 0.07049999840091914
       },
       "output_report": null
     },
@@ -1224,7 +1224,7 @@
       "verdict": "BLOCKED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.09,
+      "latency_ms": 0.06,
       "matched": true,
       "input_report": {
         "allowed": false,
@@ -1272,7 +1272,7 @@
           "validation",
           "injection"
         ],
-        "latency_ms": 0.08460000026389025
+        "latency_ms": 0.056899996707215905
       },
       "output_report": null
     },
@@ -1286,7 +1286,7 @@
       "verdict": "SAFE_RESPONSE",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.23,
+      "latency_ms": 0.17,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -1336,7 +1336,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.21639999977196567
+        "latency_ms": 0.15780000103404745
       },
       "output_report": null
     },
@@ -1350,7 +1350,7 @@
       "verdict": "BLOCKED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.33,
+      "latency_ms": 0.21,
       "matched": true,
       "input_report": {
         "allowed": false,
@@ -1400,7 +1400,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.3170000018144492
+        "latency_ms": 0.20090000180061907
       },
       "output_report": null
     },
@@ -1414,7 +1414,7 @@
       "verdict": "BLOCKED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.27,
+      "latency_ms": 0.2,
       "matched": true,
       "input_report": {
         "allowed": false,
@@ -1470,7 +1470,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.261799999861978
+        "latency_ms": 0.1967999996850267
       },
       "output_report": null
     },
@@ -1484,7 +1484,7 @@
       "verdict": "BLOCKED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.25,
+      "latency_ms": 0.19,
       "matched": true,
       "input_report": {
         "allowed": false,
@@ -1534,7 +1534,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.23880000298959203
+        "latency_ms": 0.18199999976786785
       },
       "output_report": null
     },
@@ -1548,7 +1548,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.36,
+      "latency_ms": 0.32,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -1585,7 +1585,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.17240000306628644
+        "latency_ms": 0.14229999942472205
       },
       "output_report": {
         "allowed": true,
@@ -1617,7 +1617,7 @@
           "groundedness",
           "leak_scrubber"
         ],
-        "latency_ms": 0.17640000078245066
+        "latency_ms": 0.16029999824240804
       }
     },
     {
@@ -1630,7 +1630,7 @@
       "verdict": "FALLBACK",
       "fallback_triggered": true,
       "regeneration_attempts": 0,
-      "latency_ms": 0.27,
+      "latency_ms": 0.26,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -1667,7 +1667,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.15250000069499947
+        "latency_ms": 0.14179999925545417
       },
       "output_report": {
         "allowed": false,
@@ -1700,7 +1700,7 @@
         "detectors_run": [
           "groundedness"
         ],
-        "latency_ms": 0.1064000025507994
+        "latency_ms": 0.10029999975813553
       }
     },
     {
@@ -1713,7 +1713,7 @@
       "verdict": "FALLBACK",
       "fallback_triggered": true,
       "regeneration_attempts": 0,
-      "latency_ms": 0.25,
+      "latency_ms": 0.27,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -1750,7 +1750,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.1630000006116461
+        "latency_ms": 0.16709999908925965
       },
       "output_report": {
         "allowed": false,
@@ -1783,7 +1783,7 @@
         "detectors_run": [
           "groundedness"
         ],
-        "latency_ms": 0.07869999899412505
+        "latency_ms": 0.08470000102533959
       }
     },
     {
@@ -1833,7 +1833,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.1173999989987351
+        "latency_ms": 0.12069999866071157
       },
       "output_report": {
         "allowed": false,
@@ -1866,7 +1866,7 @@
         "detectors_run": [
           "groundedness"
         ],
-        "latency_ms": 0.07700000060140155
+        "latency_ms": 0.07669999831705354
       }
     },
     {
@@ -1879,7 +1879,7 @@
       "verdict": "ALLOWED",
       "fallback_triggered": false,
       "regeneration_attempts": 0,
-      "latency_ms": 0.28,
+      "latency_ms": 0.3,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -1916,7 +1916,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.12090000018361025
+        "latency_ms": 0.1274999995075632
       },
       "output_report": {
         "allowed": true,
@@ -1951,7 +1951,7 @@
           "groundedness",
           "leak_scrubber"
         ],
-        "latency_ms": 0.1449999981559813
+        "latency_ms": 0.1599000024725683
       }
     },
     {
@@ -1964,7 +1964,7 @@
       "verdict": "FALLBACK",
       "fallback_triggered": true,
       "regeneration_attempts": 0,
-      "latency_ms": 0.18,
+      "latency_ms": 0.2,
       "matched": true,
       "input_report": {
         "allowed": true,
@@ -2001,7 +2001,7 @@
           "pii",
           "sensitive_topics"
         ],
-        "latency_ms": 0.09080000018002465
+        "latency_ms": 0.10070000280393288
       },
       "output_report": {
         "allowed": false,
@@ -2032,7 +2032,7 @@
         "detectors_run": [
           "schema_validation"
         ],
-        "latency_ms": 0.025899997126543894
+        "latency_ms": 0.028899998142151162
       }
     }
   ]
