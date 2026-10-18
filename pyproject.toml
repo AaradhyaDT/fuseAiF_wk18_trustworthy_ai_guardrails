@@ -1,0 +1,51 @@
+[project]
+name = "fuseaif-wk18-trustworthy-ai-guardrails"
+version = "0.1.0"
+description = "Trustworthy AI: Implementing Input & Output Guardrails (PII Detection, Prompt Injection, Sensitive Topics, Schema Validation, Groundedness NLI, and Evaluation Suite) - Fuse AI Fellowship 2026 Week 18"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.8.0",
+    "pydantic-settings>=2.4.0",
+    "google-genai>=1.0.0",
+    "sentence-transformers>=3.0.0",
+    "streamlit>=1.40.0",
+    "rich>=13.7.0",
+    "tabulate>=0.9.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.5.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "S", "BLE", "RUF"]
+ignore = [
+    "BLE001",
+    "S110",
+    "S112",
+    "S104",
+    "S307",
+    "S311",
+    "S324",
+    "E501",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "E402"]
+"eval/**" = ["S101"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]
